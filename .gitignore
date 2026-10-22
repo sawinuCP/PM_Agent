@@ -1,0 +1,63 @@
+# =============================================================
+# Python
+# =============================================================
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+coverage.xml
+htmlcov/
+dist/
+build/
+
+# =============================================================
+# Local state & secrets - NEVER commit real env data or keys
+# =============================================================
+.env
+.env.*
+backend/.env
+backend/.env.*
+!backend/.env.example
+backend/data/
+backend/*.db
+backend/*.sqlite
+backend/.live_parallel_verify.json
+backend/.phase*_trace.json
+backend/0.*
+backend/1.*
+logs/
+*.log
+smoke_out*.txt
+vitest.log
+tsc*.log
+build.log
+
+# =============================================================
+# Node / frontend
+# =============================================================
+node_modules/
+frontend/node_modules/
+frontend/dist/
+frontend/tsconfig.tsbuildinfo
+frontend/node_modules/.vite/
+
+# =============================================================
+# IDE / editors
+# =============================================================
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# =============================================================
+# OS junk
+# =============================================================
+.DS_Store
+Thumbs.db
+desktop.ini

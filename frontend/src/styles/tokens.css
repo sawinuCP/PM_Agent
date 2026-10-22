@@ -1,0 +1,105 @@
+:root {
+  --bg: #0a0a0c;
+  --bg-soft: #101014;
+  --surface: #16161c;
+  --surface-2: #1d1d25;
+  --surface-3: #26262f;
+  --border: #2c2c36;
+  --border-strong: #3d3d4a;
+
+  --text: #f4f4f1;
+  --text-2: #b0b0a8;
+  --text-3: #71716a;
+
+  --accent: #f2c14e;
+  --accent-strong: #ffd56a;
+  --accent-soft: rgba(242, 193, 78, 0.14);
+  --accent-border: rgba(242, 193, 78, 0.4);
+  --accent-ink: #1a1404;
+
+  --success: #5dce8f;
+  --success-soft: rgba(93, 206, 143, 0.12);
+  --warn: #f2c14e;
+  --warn-soft: rgba(242, 193, 78, 0.12);
+  --danger: #ef6e6e;
+  --danger-soft: rgba(239, 110, 110, 0.12);
+  --info: #7eb6ff;
+  --info-soft: rgba(126, 182, 255, 0.12);
+  --violet: #c4b5a0;
+  --violet-soft: rgba(196, 181, 160, 0.12);
+
+  --sans: "Figtree", "Segoe UI", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  --fs-xs: 11px;
+  --fs-sm: 13px;
+  --fs-md: 15px;
+  --fs-lg: 17px;
+  --fs-xl: 28px;
+  --lh-body: 1.55;
+
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 20px;
+  --s-6: 24px;
+  --s-8: 32px;
+
+  --r-sm: 10px;
+  --r-md: 14px;
+  --r-lg: 22px;
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.35);
+  --shadow-2: 0 24px 60px rgba(0, 0, 0, 0.45);
+  --shadow-glow: 0 0 0 1px var(--accent-border);
+
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 160ms;
+  --dur: 280ms;
+  --dur-slow: 420ms;
+
+  --topbar-h: 72px;
+  --rail-w: 320px;
+  --sheet-w: min(720px, calc(100vw - 48px));
+  --telemetry-w: min(720px, 100vw);
+  --stage-max: 760px;
+}
+
+[data-theme="light"] {
+  --bg: #f6f3ea;
+  --bg-soft: #fffaf0;
+  --surface: #fffdf8;
+  --surface-2: #f3eee3;
+  --surface-3: #e8e1d2;
+  --border: #ddd4c2;
+  --border-strong: #c9bea8;
+
+  --text: #1c1914;
+  --text-2: #5c564b;
+  --text-3: #8a8273;
+
+  --accent: #c4921a;
+  --accent-strong: #a67810;
+  --accent-soft: rgba(196, 146, 26, 0.12);
+  --accent-border: rgba(196, 146, 26, 0.38);
+  --accent-ink: #fff8e8;
+
+  --success: #1f8a4c;
+  --success-soft: rgba(31, 138, 76, 0.12);
+  --warn: #b8860b;
+  --warn-soft: rgba(184, 134, 11, 0.12);
+  --danger: #c43c3c;
+  --danger-soft: rgba(196, 60, 60, 0.1);
+  --info: #2b6cb0;
+  --info-soft: rgba(43, 108, 176, 0.1);
+  --violet: #6f6554;
+  --violet-soft: rgba(111, 101, 84, 0.1);
+
+  --shadow-1: 0 1px 2px rgba(40, 32, 16, 0.08);
+  --shadow-2: 0 24px 50px rgba(40, 32, 16, 0.12);
+}
+
+[data-theme="light"] body {
+  background:
+    radial-gradient(900px 480px at 50% -10%, rgba(196, 146, 26, 0.1), transparent 55%),
+    var(--bg);
+}

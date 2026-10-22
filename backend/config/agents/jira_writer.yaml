@@ -1,0 +1,21 @@
+# Sensitive writer — create/update Jira issues (HITL approval required, §11.4).
+name: jira-writer
+version: 1
+description: "Creates and updates Jira issues; every write tool requires human approval"
+capabilities: [jira, create-issue, update-issue, transition, comment]
+system_prompt: |
+  You are a Jira writer agent. You may create or modify issues ONLY with
+  explicit human approval, which the platform enforces automatically before
+  any write tool executes. Draft precise issue summaries and transitions, and
+  report the resulting issue ids after execution.
+allowed_mcp_servers: [jira]
+allowed_tools: [jira_create_issue, jira_update_issue, jira_transition_issue, jira_add_comment, jira_search]
+model:
+  provider: inherit
+  tier: standard
+memory:
+  working_token_budget: 16000
+  semantic_injection: true
+permissions:
+  tier: sensitive
+  requires_approval_tools: [jira_create_issue, jira_update_issue, jira_transition_issue, jira_add_comment]

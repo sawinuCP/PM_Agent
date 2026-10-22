@@ -1,0 +1,82 @@
+[project]
+name = "agent-orchestrator"
+version = "1.0.0"
+description = "Dynamic, configuration-driven multi-agent orchestration platform (MCP + LangGraph + FastAPI)"
+readme = { text = "See the repository README for setup, architecture, and demo instructions.", content-type = "text/plain" }
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Candidate" }]
+dependencies = [
+    # API layer
+    "fastapi>=0.115,<1",
+    "uvicorn[standard]>=0.30,<1",
+    "sse-starlette>=3,<4",
+    # Config / validation
+    "pydantic>=2.9,<3",
+    "pydantic-settings>=2.6,<3",
+    "PyYAML>=6.0.2,<7",
+    # Orchestration / AI — langgraph>=1.2.11 required (langchain-core 1.x dropped pydantic_v1 shim)
+    "langchain>=1.3,<2",
+    "langchain-core>=1.4.9,<2",
+    "langchain-openai>=1.0,<2",
+    "openai>=1.55,<2",
+    "langgraph>=1.2.11,<2",
+    "langgraph-checkpoint-sqlite>=2.0,<4",
+    "langgraph-checkpoint-postgres>=2.0,<4",
+    "tiktoken>=0.8,<1",
+    # MCP
+    "mcp>=2.1,<3",
+    # Persistence
+    "SQLAlchemy>=2.0.36,<3",
+    "aiosqlite>=0.20,<1",
+    "psycopg[binary,pool]>=3.2,<4",
+    "asyncpg>=0.30,<1",
+    "alembic>=1.14,<2",
+    # HTTP client / misc
+    "httpx>=0.27,<1",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3,<9",
+    "pytest-asyncio>=0.24,<2",
+    "pytest-cov>=5,<8",
+    "ruff>=0.8,<1",
+    "mypy>=1.13,<2",
+    "types-PyYAML",
+]
+
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["app*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+filterwarnings = ["ignore::DeprecationWarning", "ignore::UserWarning"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["app", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "ASYNC"]
+ignore = [
+    "E501",   # long lines in prompts/config tables are readable
+    "B008",   # FastAPI dependency injection in defaults
+    "B904",   # raise-from enforced where it matters; cleanup paths re-raise
+    "SIM108", # ternaries not always clearer
+    "UP042",  # str,Enum kept deliberately: JSON-serializable members are the
+              # SSE/OpenAPI wire contract (FastAPI-recommended pattern)
+    "ASYNC240", # one-time Path mkdir/str at MCP connect is not a hot path
+]
+
+[tool.mypy]
+python_version = "3.11"
+ignore_missing_imports = true
+check_untyped_defs = true

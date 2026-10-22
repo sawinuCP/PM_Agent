@@ -1,0 +1,56 @@
+# Containerized local environment. -LLM mode is backend/.env LLM_PROVIDER only.
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_USER: orchestrator
+      POSTGRES_PASSWORD: orchestrator
+      POSTGRES_DB: orchestrator
+    ports: ["127.0.0.1:5433:5432"]
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U orchestrator"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  jira-mcp:
+    build:
+      context: ./backend
+      dockerfile: jira_mcp.Dockerfile
+    environment:
+      JIRA_MCP_HOST: 0.0.0.0
+      JIRA_MCP_PORT: "8001"
+    ports: ["127.0.0.1:8001:8001"]
+
+  # Optional full stack — for local dev, run only postgres + jira-mcp here and use
+  # .\scripts\start_local.ps1 (backend + frontend on the host read backend/.env).
+  backend:
+    profiles: ["full"]
+    build: ./backend
+    depends_on:
+      postgres:
+        condition: service_healthy
+      jira-mcp:
+        condition: service_started
+    env_file:
+      - ./backend/.env
+    environment:
+      DATABASE_URL: postgresql+asyncpg://orchestrator:orchestrator@postgres:5432/orchestrator
+      CHECKPOINT_DB_PATH: ""
+      JIRA_MCP_URL: http://jira-mcp:8001/mcp
+    ports: ["127.0.0.1:8000:8000"]
+    volumes:
+      - backend_data:/app/data
+
+  frontend:
+    profiles: ["full"]
+    build: ./frontend
+    depends_on:
+      backend:
+        condition: service_started
+    ports: ["127.0.0.1:5173:80"]
+
+volumes:
+  pgdata:

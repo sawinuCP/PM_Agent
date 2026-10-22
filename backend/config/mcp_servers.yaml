@@ -1,0 +1,17 @@
+# MCP server fleet — loaded at backend startup.
+# Jira URL defaults to localhost :8001; override with JIRA_MCP_URL (docker/smoke/e2e).
+# code-sandbox (run_python) is a local platform tool — not listed here.
+mcp_servers:
+  - name: jira
+    transport: streamable_http
+    url: "http://127.0.0.1:8001/mcp"
+    timeout_s: 30
+    max_retries: 3
+    tool_cache_ttl_s: 300
+    mode: mock            # mock | real — real swaps fixtures for Jira REST inside the server
+    sensitive_tools:      # write tools gated by HITL approval (§11.4)
+      - jira_create_issue
+      - jira_update_issue
+      - jira_transition_issue
+      - jira_add_comment
+      - jira_reset_fixtures
